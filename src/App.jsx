@@ -280,7 +280,7 @@ function App() {
     setCopyState("Copy");
 
     try {
-      const response = await fetch("http://localhost:5500/generate", {
+      const response = await fetch("https://ai-study-helper-backend.onrender.com/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
