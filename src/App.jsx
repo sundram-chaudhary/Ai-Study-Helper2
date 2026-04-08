@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 const styles = `
   :root {
     font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -280,7 +282,7 @@ function App() {
     setCopyState("Copy");
 
     try {
-      const response = await fetch("https://ai-study-helper-backend.onrender.com/generate", {
+      const response = await fetch(`${API_BASE_URL}/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -289,7 +291,16 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error(`Server returned ${response.status}`);
+        let details = `Server returned ${response.status}`;
+
+        try {
+          const errorData = await response.json();
+          details = errorData.error || errorData.message || details;
+        } catch {
+          // Keep the fallback status message when the response is not JSON.
+        }
+
+        throw new Error(details);
       }
 
       const data = await response.json();
