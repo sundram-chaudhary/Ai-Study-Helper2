@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
-
 const styles = `
   :root {
     font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -282,7 +280,7 @@ function App() {
     setCopyState("Copy");
 
     try {
-      const response = await fetch(`${API_BASE_URL}/generate`, {
+      const response = await fetch(`https://ai-study-helper2.onrender.com/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
